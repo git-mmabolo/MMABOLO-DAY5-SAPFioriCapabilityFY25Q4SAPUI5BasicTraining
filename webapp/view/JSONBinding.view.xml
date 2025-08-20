@@ -5,15 +5,71 @@
     xmlns:core = "sap.ui.core">
     <Page id="page" title="{i18n>title}">
         <Panel id="panelBindingBasics" headerText="Data Binding Basics" class="sapUiResponsiveMargin" width="auto">
-            <f:SimpleForm id="BindingBasicsSimpleForm" editable="true" layout="ResponsiveGridLayout" title="Details" >
-            
+            <f:SimpleForm id="BindingBasicsSimpleForm" editable="true" layout="ResponsiveGridLayout" >
+                <Label id="dataBindingLabelEid" text="EID" visible="true"></Label>
+                <Input id="dataBindingInputEid" visible="true" value="{formatter>/formatter/0/Eid}"></Input>
+                <Label id="dataBindingLabelCheckBox" text="Enabled" visible="true"></Label>
+                <CheckBox id="dataBindingCheckbox" visible="true"></CheckBox>
             </f:SimpleForm>
         </Panel>
 
         <Panel id="panelAddressDetails" headerText="Address Details" class="sapUiResponsiveMargin" width="auto">
-            <f:SimpleForm id="AdressSimpleForm" editable="true" layout="ResponsiveGridLayout" title="Details" >
-            
+            <f:SimpleForm id="AdressSimpleForm" editable="true" layout="ResponsiveGridLayout">
+                <Label id="addressDataAddLabel" text="Address" visible="true"></Label>
+                <Text id="addressDataText" class="sapUiSmallMarginBottom" text="
+                        {path: 'formatter>/formatter/0/Address/Street', formatter: '.formatter./Address/Street'},
+                        {path: 'formatter>/formatter/0/Address/City', formatter: '.formatter./Address/City'},
+                        {path: 'formatter>/formatter/0/Address/Zip', formatter: '.formatter./Address/Zip'},
+                        {path: 'formatter>/formatter/0/Address/Country', formatter: '.formatter./Address/Country'}" 
+                        visible="true" />
+                <Link id="addressDataLink" text="Send Email" href="{path: 'formatter>/formatter/0/Address/Eid', formatter: '.formatter./Address/Eid'}" visible="true" press=".onSendEmail"></Link>
+                <Label id="addressDataSalesLabel" text="Sales Amount" visible="true"></Label>
+                <Input id="addressDataInput" visible="true" maxLength="8" class="sapUiSmallMarginBegin" enabled="true" 
+                    value="{ path: 'formatter>/formatter/0/SalesAmount' } {path: 'formatter>/formatter/0/CurrencyCode' }"/>
             </f:SimpleForm>
         </Panel>
+
+        <Panel id="panelAggregationBinding" headerText="Aggregation Binding" class="sapUiResponsiveMargin" width="auto">
+            <List id="listAggregationBinding" includeItemInSelection="true" items="{productsModel>/products}">
+                <ObjectListItem id="objectListItemAggregationBinding1" 
+                                title= "{path: 'productsModel>/products/0/ProductName', formatter: '.productsModel./products'}">
+                                <attributes>
+                                    <ObjectAttribute id="objAtt1" 
+                                    text="Stock On Hand: {path: 'productsModel>/products/0/QuantityPerUnit', formatter: '.productsModel./QuantityPerUnit'}"/>
+                                    <ObjectAttribute id="objAtt2" 
+                                    text="Current Stock Value: {path: 'productsModel>/products/0/UnitsInStock', formatter: '.productsModel./UnitsInStock'}"/>
+                                    <ObjectAttribute id="objAtt3" 
+                                    text="{path: 'productsModel>/products/0/UnitPrice', formatter: '.productsModel./UnitPrice'}"/>
+                                    <ObjectAttribute id="objAtt4" 
+                                    text="{path: 'formatter>/formatter/0/CurrencyCode'}"/>                             
+                                </attributes>
+                </ObjectListItem>
+            </List>
+        </Panel>     
+
+        <Panel id="panelProductDetails" headerText="Product Details" class="sapUiResponsiveMargin" width="auto">
+            <f:SimpleForm id="ProductDetailsSimpleForm" editable="true" layout="ResponsiveGridLayout">
+                <Label id="pdProductId" text="Product ID" visible="true"/>
+                <Input id="pdProductIdInp" value="{productsModel>/products/0/ProductID}"/>
+                <Label id="pdProductName" text="Product Name" visible="true"/>
+                <Input id="pdProductNameInp" value="{productsModel>/products/0/ProductName}"/>
+                <Label id="pdSupplierID" text="Supplier ID" visible="true"/>
+                <Input id="pdSupplierIDInp" value="{productsModel>/products/0/SupplierID}"/>
+                <Label id="pdCategoryID" text="Category ID" visible="true"/>
+                <Input id="pdCategoryIDInp" value="{productsModel>/products/0/CategoryID}" />
+                <Label id="pdQuantityPerUnit" text="Quantity Per Unit" visible="true"/>
+                <Input id="pdQuantityPerUnitInp" value="{productsModel>/products/0/QuantityPerUnit}"/>
+                <Label id="pdUnitPrice" text="Unit Price" visible="true"/>
+                <Input id="pdUnitPriceInp" value="{productsModel>/products/0/UnitPrice}"/>  
+                <Label id="pdUnitsInStock" text="Units in Stock" visible="true"/>
+                <Input id="pdUnitsInStockInp" value="{productsModel>/products/0/UnitsInStock}"/> 
+                <Label id="pdUnitsOnOrder" text="Units On Order" visible="true"/>
+                <Input id="pdUnitsOnOrderInp" value="{productsModel>/products/0/UnitsOnOrder}"/> 
+                <Label id="pdReorderLevel" text="Reorder Level" visible="true"/>
+                <Input id="pdReorderLevelInp" value="{productsModel>/products/0/ReorderLevel}"/>   
+                <Label id="pdDiscontinued" text="Discontinued" visible="true"/>
+                <Input id="pdDiscontinuedInp" value="{productsModel>/products/0/Discontinued}"/>                                                                                                                                          
+            </f:SimpleForm>        
+        </Panel>   
     </Page>
 </mvc:View>
